@@ -3,13 +3,16 @@ def climbStairs(n):
     :type n: int
     :rtype: int
     """
-    def recur(n, m=0):
-        if n > 0:
-            return recur(n-1) + recur(n-2)
-        elif n == 0:
-            return m + 1
-        else:
-            return 0
-    return recur(n)
+    record = []
+    s = 0
+    record.extend([n - 1, n - 2])
+    while len(record) > 0:
+        r = record.pop()
+        if r == 0:
+            s += 1
+        elif r > 0:
+            record.extend([r - 1, r - 2])
+    return s
+            
 
-print(climbStairs(3))
+print(climbStairs(2))
