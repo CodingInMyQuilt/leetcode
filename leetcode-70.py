@@ -3,16 +3,19 @@ def climbStairs(n):
     :type n: int
     :rtype: int
     """
-    record = []
-    s = 0
-    record.extend([n - 1, n - 2])
-    while len(record) > 0:
-        r = record.pop()
-        if r == 0:
-            s += 1
-        elif r > 0:
-            record.extend([r - 1, r - 2])
-    return s
+    if n == 1:
+        return 1
+    elif n == 2:
+        return 2
+    else:
+        x = 0
+        p = 1
+        q = 2
+        for i in range(3, n+1):
+            x = p + q
+            p = q
+            q = x
+        return x
             
 
 print(climbStairs(2))
