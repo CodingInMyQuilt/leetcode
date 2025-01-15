@@ -3,19 +3,18 @@ def rob(nums):
     :type nums: List[int]
     :rtype: int
     """
-    def x(nums, sumList):
-        length = len(nums)
-        if length >= 4:
-            b = nums[3:]
-            b[0] += nums[0]
-            x(b, sumList)
-        if length >= 3:
-            a = nums[2:]
-            a[0] += nums[0]
-            x(a, sumList)
-        if length <= 2:
-            sumList.append(nums[0] if length == 1 or nums[0] > nums[1] else nums[1])
-            return
+    def calculateSumList(x):
+        sumList = []
+        while len(x) != 0:
+            index, data = x.pop()
+            if index + 2 <= length-1:
+                x.append((index+2, data + nums[index + 2]))
+            else:
+                sumList.append(data)
+                continue
+            if index + 3 <= length-1:
+                x.append((index+3, data + nums[index + 3]))
+        return sumList
     length = len(nums)
     if length == 1:
         return nums[0]
@@ -23,7 +22,7 @@ def rob(nums):
         return nums[0] if nums[0] > nums[1] else nums[1]
     elif length == 3:
         return nums[0] + nums[2] if nums[0] + nums[2] > nums[1] else nums[1]
-    sumList = []
-    x(nums, sumList)
-    x(nums[1:], sumList)
-    return max(sumList)
+    else:
+        return max(calculateSumList([(0, nums[0]),(1,nums[1])]))
+
+print(rob([4,1,2,7,5,3,1]))
